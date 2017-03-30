@@ -33,6 +33,9 @@
     	pc.y = 20;
     	pc.vidas = 3;
     	pc.color = "red";
+    	var base = new Sprite();
+    	base .x = 10;
+    	base.y = 190;
 		requestAnimationFrame(passo);
 
 		function passo(){
@@ -44,6 +47,32 @@
 			ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
 			pc.mover(dt);
 			pc.desenhar(ctx);
+			base.desenhar(ctx);
+
+			if(pc.colidiuComLimites(eCanvas)){
+				pc.vidas--;
+				pc.x = 150;
+    			pc.y = 20;
+    			pc.vx = 0;
+    			pc.vy = 0;
+			}
+
+			if(pc.colidiuComBase(base)){
+		        if(pc.vy < 20 && Math.abs(pc.vx) < 10){
+		          pc.vidas++;
+		          pc.vy = 0;
+		          pc.vx = 0;
+		          base.x = Math.random()*eCanvas.width;
+		          base.y = 190;
+		        }else{
+		          pc.vidas--;
+		          pc.x = 150;
+		          pc.y = 20;
+		          pc.vy = 0;
+		          pc.vx = 0;
+		        }
+		      }
+
 			antes = agora;
 		}
 
