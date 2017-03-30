@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lunar Lander</title>
+	<meta charset="utf-8">
+	<style>
+		body{
+			width: 500px;
+			margin: auto;
+			text-align: center;
+		}
+		canvas{
+			border: 1px solid black;
+			background-color: #b6b6ea;
+		}
+	</style>
+	<script src="Sprite.js"></script>
+</head>
+<body>
+	<h1>Lunar Lander</h1>
+	<canvas></canvas>
+	<script>
+		var antes = new Date();
+		var agora = new Date();
+		var dt = 0;
+		var fps = 0;
+		var eCanvas = document.getElementsByTagName("canvas")[0];
+		var ctx = eCanvas.getContext("2d");
+		eCanvas.width = 400;
+    	eCanvas.height = 200;
+		requestAnimationFrame(passo);
+	</script>
+</body>
+</html>
