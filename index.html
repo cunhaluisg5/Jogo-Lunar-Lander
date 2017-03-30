@@ -28,7 +28,64 @@
 		var ctx = eCanvas.getContext("2d");
 		eCanvas.width = 400;
     	eCanvas.height = 200;
+    	var pc = new Sprite();
+    	pc.x = 150;
+    	pc.y = 20;
+    	pc.vidas = 3;
+    	pc.color = "red";
 		requestAnimationFrame(passo);
+
+		function passo(){
+			requestAnimationFrame(passo);
+			agora = new Date();
+			dt = (agora - antes) / 1000;
+			ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+			ctx.strokeText("Fps: " + Math.floor(1 / dt), 10, 20);
+			ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
+			pc.mover(dt);
+			pc.desenhar(ctx);
+			antes = agora;
+		}
+
+		addEventListener("keydown", teclaPressionada);
+		addEventListener("keyup", teclaSolta);
+
+		function teclaPressionada(evento){
+			switch(evento.keyCode){
+				case 37:
+					pc.ax = -pc.vm;
+					evento.preventDefault();
+					break;
+				case 39:
+					pc.ax = +pc.vm;
+					evento.preventDefault();
+					break;
+				case 38:
+					pc.ay = -pc.vm;
+					evento.preventDefault();
+					break;
+				case 40:
+					pc.ay = +pc.vm;
+					evento.preventDefault();
+					break;
+				default:
+					pc.ax = 0;
+					pc.ay = 0;
+			}
+		}
+
+		function teclaSolta(evento){
+			switch(evento.keyCode){
+				case 37:
+				case 39:
+					pc.ax = 0;
+					break;
+				case 38:
+				case 40:
+					pc.ay = 0;
+					break;
+			}
+		}
 	</script>
 </body>
 </html>
