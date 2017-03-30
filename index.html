@@ -32,7 +32,7 @@
     	pc.x = 150;
     	pc.y = 20;
     	pc.vidas = 3;
-    	pc.color = "red";
+    	pc.color = "green";
     	var base = new Sprite();
     	base .x = 10;
     	base.y = 190;
@@ -43,11 +43,16 @@
 			agora = new Date();
 			dt = (agora - antes) / 1000;
 			ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
-			ctx.strokeText("Fps: " + Math.floor(1 / dt), 10, 20);
-			ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
+			ctx.fillStyle = "yellow";
+			ctx.strokeStyle = "black";
+			ctx.font = "1em Arial Black";
+			ctx.strokeText("Fps: " + Math.floor(1 / dt), 150, 20);
+			ctx.fillText("Vidas: " + pc.vidas, 10, 20);
+			ctx.strokeText("Vidas: " + pc.vidas, 10, 20);
 			pc.mover(dt);
 			pc.desenhar(ctx);
 			base.desenhar(ctx);
+			pc.desenhaNivel();
 
 			if(pc.colidiuComLimites(eCanvas)){
 				pc.vidas--;
@@ -60,6 +65,7 @@
 			if(pc.colidiuComBase(base)){
 		        if(pc.vy < 20 && Math.abs(pc.vx) < 10){
 		          pc.vidas++;
+		          pc.nivel++;
 		          pc.vy = 0;
 		          pc.vx = 0;
 		          base.x = Math.random()*eCanvas.width;
@@ -72,7 +78,6 @@
 		          pc.vx = 0;
 		        }
 		      }
-
 			antes = agora;
 		}
 
@@ -80,6 +85,7 @@
 		addEventListener("keyup", teclaSolta);
 
 		function teclaPressionada(evento){
+			console.log(evento.keyCode);
 			switch(evento.keyCode){
 				case 37:
 					pc.ax = -pc.vm;
@@ -97,6 +103,16 @@
 					pc.ay = +pc.vm;
 					evento.preventDefault();
 					break;
+				case 13:
+					if(pc.vidas == 0){
+						ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+						pc.x = 150;
+		    			pc.y = 20;
+		    			pc.vx = 0;
+		    			pc.vy = 0;
+		    			pc.vidas = 3;
+		    		break;
+					}
 				default:
 					pc.ax = 0;
 					pc.ay = 0;

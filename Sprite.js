@@ -8,6 +8,7 @@ function Sprite(){
 	this.vm = 150;
 	this.g = 30;
 	this.vidas = 0;
+	this.nivel = 1;
 	this.color = "black";
 
 	this.mover = function(dt){
@@ -18,8 +19,35 @@ function Sprite(){
 	}
 
 	this.desenhar = function(ctx){
-		ctx.fillStyle = this.color;
-		ctx.fillRect(this.x, this.y, 10, 10);
+		if(pc.vidas > 0){
+			ctx.fillStyle = this.color;
+			ctx.fillRect(this.x, this.y, 10, 10);
+		} else{
+			ctx.fillStyle = "orange";
+			ctx.strokeStyle = "black";
+      		ctx.font = "2em Arial";
+      		var texto = "Você Perdeu!";
+      		ctx.fillText(texto, 100, 100);
+      		ctx.strokeText(texto, 100, 100);
+      		ctx.fillStyle = "white";
+      		ctx.strokeStyle = "black";
+      		ctx.font = "1.1em sans-serif";
+      		var texto = "Tecle ENTER para reiniciar";
+      		ctx.fillText(texto, 90, 130);
+      		ctx.strokeText(texto, 90, 130);
+      		this.vx = 0;
+      		this.vy = 0;
+      		pc.nivel = 1;
+		  }
+	}
+
+	this.desenhaNivel = function(){
+		ctx.fillStyle = "yellow";
+	    ctx.strokeStyle = "black";
+	    ctx.font = "1em Arial Black";
+	    var texto = "Nível: " + this.nivel;
+	    ctx.fillText(texto, 320, 20);
+	    ctx.strokeText(texto, 320, 20);
 	}
 
 	this.colidiuComBase = function(alvo){
@@ -31,6 +59,6 @@ function Sprite(){
 	}
 
 	this.colidiuComLimites = function(alvo){
-		return (this.x < 0 || this.x > alvo.width || this.y < 0 || this.y > alvo.height);
+		return (this.x < 0 || this.x+10 > alvo.width || this.y < 0 || this.y+10 > alvo.height);
 	}
 }
