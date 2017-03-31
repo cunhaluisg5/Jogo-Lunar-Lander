@@ -11,7 +11,7 @@
 		}
 		canvas{
 			border: 1px solid black;
-			background-color: #b6b6ea;
+			background-color: #5d5d6f;
 		}
 	</style>
 	<script src="Sprite.js"></script>
@@ -31,11 +31,15 @@
     	var pc = new Sprite();
     	pc.x = 150;
     	pc.y = 20;
+    	pc.largura = 10;
+    	pc.color = "#2fc723";
     	pc.vidas = 3;
-    	pc.color = "green";
     	var base = new Sprite();
-    	base .x = 10;
+    	base .x = Math.random()*eCanvas.width;
     	base.y = 190;
+    	base.largura = 10;
+    	base.color = "#5a99cc";
+    	base.vidas = 3;
 		requestAnimationFrame(passo);
 
 		function passo(){
@@ -52,6 +56,7 @@
 
 			if(pc.colidiuComLimites(eCanvas)){
 				pc.vidas--;
+				base.vidas--;
 				pc.x = 150;
     			pc.y = 20;
     			pc.vx = 0;
@@ -62,12 +67,19 @@
 		        if(pc.vy < 20 && Math.abs(pc.vx) < 10){
 		          pc.vidas++;
 		          pc.nivel++;
+		          base.vidas++;
+		          base.nivel++;
 		          pc.vy = 0;
 		          pc.vx = 0;
 		          base.x = Math.random()*eCanvas.width;
 		          base.y = 190;
+		          base.largura = base.largura - 0.5;
+		          if(base.largura == 5){
+		          	base.largura = 10;
+		          }
 		        }else{
 		          pc.vidas--;
+		          base.vidas--;
 		          pc.x = 150;
 		          pc.y = 20;
 		          pc.vy = 0;
@@ -107,6 +119,10 @@
 		    			pc.vy = 0;
 		    			pc.vidas = 3;
 						pc.nivel = 1;
+						base.x = Math.random()*eCanvas.width;
+						base.vidas = 3;
+						base.nivel = 1;
+						evento.preventDefault();
 		    		break;
 					}
 				default:
