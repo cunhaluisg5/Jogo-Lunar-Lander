@@ -31,13 +31,11 @@
     	var pc = new Sprite();
     	pc.x = 150;
     	pc.y = 20;
-    	pc.largura = 10;
     	pc.color = "#2fc723";
     	pc.vidas = 3;
     	var base = new Sprite();
     	base .x = Math.random()*eCanvas.width;
     	base.y = 190;
-    	base.largura = 10;
     	base.color = "#5a99cc";
     	base.vidas = 3;
 		requestAnimationFrame(passo);
@@ -73,11 +71,8 @@
 		          pc.vx = 0;
 		          base.x = Math.random()*eCanvas.width;
 		          base.y = 190;
-		          base.largura = base.largura - 0.5;
-		          if(base.largura == 5){
-		          	base.largura = 10;
-		          }
-		        }else{
+		        }
+		        else{
 		          pc.vidas--;
 		          base.vidas--;
 		          pc.x = 150;
@@ -85,7 +80,7 @@
 		          pc.vy = 0;
 		          pc.vx = 0;
 		        }
-		      }
+		    }
 			antes = agora;
 		}
 

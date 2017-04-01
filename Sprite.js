@@ -9,7 +9,6 @@ function Sprite(){
 	this.g = 30;
 	this.vidas = 0;
 	this.nivel = 1;
-	this.largura = 0;
 	this.color = "black";
 
 	this.mover = function(dt){
@@ -22,7 +21,7 @@ function Sprite(){
 	this.desenhar = function(ctx){
 		if(this.vidas > 0 && this.nivel < 11){
 			ctx.fillStyle = this.color;
-			ctx.fillRect(this.x, this.y, this.largura, 10);
+			ctx.fillRect(this.x, this.y, 10, 10);
 		}
 		else if(this.vidas == 0){
 				ctx.fillStyle = "#843232";
