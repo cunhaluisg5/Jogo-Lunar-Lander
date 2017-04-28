@@ -7,6 +7,8 @@ function Sprite(){
 	this.ay = 0;
 	this.vm = 150;
 	this.g = 30;
+	this.width = 0;
+	this.height = 0;
 	this.vidas = 0;
 	this.nivel = 1;
 	this.color = "black";
@@ -21,7 +23,7 @@ function Sprite(){
 	this.desenhar = function(ctx){
 		if(this.vidas > 0 && this.nivel < 11){
 			ctx.fillStyle = this.color;
-			ctx.fillRect(this.x, this.y, 10, 10);
+			ctx.fillRect(this.x, this.y, this.width, this.height);
 		}
 		else if(this.vidas == 0){
 				ctx.fillStyle = "#843232";
@@ -88,14 +90,14 @@ function Sprite(){
 	}
 
 	this.colidiuComBase = function(alvo){
-		if(this.y+10 < alvo.y) return false;
-    	if(this.y > alvo.y+10) return false;
-    	if(this.x+10 < alvo.x) return false;
-    	if(this.x > alvo.x+10) return false;    
+		if(this.y+this.height < alvo.y) return false;
+    	if(this.y > alvo.y+alvo.height) return false;
+    	if(this.x+this.width < alvo.x) return false;
+    	if(this.x > alvo.x+alvo.width) return false;    
     	return true;
 	}
 
 	this.colidiuComLimites = function(alvo){
-		return (this.x < 0 || this.x+10 > alvo.width || this.y < 0 || this.y+10 > alvo.height);
+		return (this.x < 0 || this.x+this.width > alvo.width || this.y < 0 || this.y+this.height > alvo.height);
 	}
 }

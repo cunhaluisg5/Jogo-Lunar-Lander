@@ -9,9 +9,21 @@
 			margin: auto;
 			text-align: center;
 		}
+		h1{
+			color: #0B0B62;
+		}
 		canvas{
 			border: 1px solid black;
 			background-color: #5d5d6f;
+		}
+		p{
+			color: black;
+			font-family: sans-serif;
+			font-size: 12px;
+		}
+		span{
+			color: red;
+			font-weight:bold;
 		}
 	</style>
 	<script src="Sprite.js"></script>
@@ -19,6 +31,13 @@
 <body>
 	<h1>Lunar Lander</h1>
 	<canvas></canvas>
+	<h3>Objetivo do Jogo:</h3>
+	<p>Faça com que o quadrado verde encoste lentamente no quadrado azul para que você avance de nível. Ao término do nível 10 você vence o jogo.</p>
+	<h3>Instruções:</h3>
+	<p>O jogo começa com três vidas e a cada nível avançado você ganha mais uma.</p>
+	<p>A cada vez que o quadrado verde ultrapassar as laterais da tela ou encostar muito rápido no quadrado azul, uma vida é perdida e caso a mesma chegue a zero, <span>VOCÊ PERDE!</span></p>
+	<p>Para mover o quadrado verde utilize as teclas direcionais do teclado.</p>
+	<p>Utilize a tecla "P" para pausar ou a tecla "O" para continuar.</p>
 	<script>
 		var antes = new Date();
 		var agora = new Date();
@@ -31,17 +50,21 @@
     	var pc = new Sprite();
     	pc.x = 150;
     	pc.y = 20;
+    	pc.width = 10;
+    	pc.height = 10;
     	pc.color = "#2fc723";
     	pc.vidas = 3;
     	var base = new Sprite();
-    	base .x = Math.random()*eCanvas.width;
+    	base.x = Math.floor(Math.random() * (300 - 10)) + 10;
     	base.y = 190;
+    	base.width = 10;
+    	base.height = 10;
     	base.color = "#5a99cc";
     	base.vidas = 3;
-		requestAnimationFrame(passo);
+		var id = requestAnimationFrame(passo);
 
 		function passo(){
-			requestAnimationFrame(passo);
+			id = requestAnimationFrame(passo);
 			agora = new Date();
 			dt = (agora - antes) / 1000;
 			ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
@@ -59,6 +82,9 @@
     			pc.y = 20;
     			pc.vx = 0;
     			pc.vy = 0;
+    			if(pc.vidas == 0 || pc.nivel > 10){
+		          	base.width = 10;
+		          }
 			}
 
 			if(pc.colidiuComBase(base)){
@@ -69,8 +95,12 @@
 		          base.nivel++;
 		          pc.vy = 0;
 		          pc.vx = 0;
-		          base.x = Math.random()*eCanvas.width;
+		          base.width--;
+		          base.x = Math.floor(Math.random() * (300 - 10)) + 10;
 		          base.y = 190;
+		          if(pc.vidas == 0 || pc.nivel > 10){
+		          	base.width = 10;
+		          }
 		        }
 		        else{
 		          pc.vidas--;
@@ -79,6 +109,9 @@
 		          pc.y = 20;
 		          pc.vy = 0;
 		          pc.vx = 0;
+		          if(pc.vidas == 0 || pc.nivel > 10){
+		          	base.width = 10;
+		          }
 		        }
 		    }
 			antes = agora;
@@ -136,6 +169,13 @@
 				case 40:
 					pc.ay = 0;
 					break;
+				case 79:
+          			antes = new Date();
+          			id = requestAnimationFrame(passo);
+        			break;
+        		case 80:
+          			cancelAnimationFrame(id);
+        			break;
 			}
 		}
 	</script>
